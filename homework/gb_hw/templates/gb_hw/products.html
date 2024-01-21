@@ -1,0 +1,13 @@
+{% extends 'gb_hw/base.html' %}
+{% block title %}Товары{% endblock %}
+{% block content %}
+<div class="container">
+    <h4>Список товаров</h4>
+    {% for product in products %}
+    <li><pre>ID: {{ product.pk }} Название:{{ product.product_name }}
+        Цена: {{ product.price }} Количество: {{ product.count }}</pre>
+    </li>
+    {% endfor %}
+
+</div>
+{% endblock %}

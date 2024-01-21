@@ -1,7 +1,8 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.views import View
+from django.shortcuts import render, get_object_or_404
 import logging
-
+from .models import Customer, Product, Order
 logger = logging.getLogger(__name__)
 
 
@@ -25,4 +26,22 @@ def about(request):
     except Exception as e:
         logger.exception(f'Error in about page: {e}')
         return HttpResponse("Oops, something went wrong.")
+
+
+class Customer(View):
+    def get(self, request):
+        return render(request, 'customer.html')
+
+
+class ProductList(View):
+    def get(self, request):
+        products = Product.objects.all()
+        context = {'products': products}
+        context = {'products': products}
+        return render(request, 'gb_hw/products.html', context)
+
+
+class Order(View):
+    def get(self, request):
+        return render(request, 'order.html')
 
