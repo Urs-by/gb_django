@@ -5,8 +5,8 @@
     <h4>Список заказов</h4>
     {% for order in orders %}
 
-    <li> <a href="{% url 'order_detail' order=order.pk %}">ID:<b> {{ order.pk }}, </b>Дата заказа:<b>{{order.date_ordered }},
-    </b>Сумма заказа:<b> {{ order.total }}</b></a>
+    <li> <a href="{% url 'order_detail' order=order.pk %}">ID:<b> {{ order.pk }}, </b></a>Дата заказа:<b>{{order.date_ordered }},
+    </b>Сумма заказа:<b> {{ order.total }}</b>
     </li>
     {% endfor %}
 

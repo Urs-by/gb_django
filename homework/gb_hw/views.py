@@ -70,9 +70,9 @@ class OrderDetail(View):
 
 
 class OrdersCustomer(View):
-    def get(self, request, customer):
+    def get(self, request, customer, delta=360):
         end_date = datetime.now()
-        start_date = end_date - timedelta(days=360)
+        start_date = end_date - timedelta(days=delta)
 
         customer = Customer.objects.get(pk=customer)
         orders = Order.objects.filter(customer_id=customer.pk, date_ordered__range=(start_date, end_date)).order_by(
