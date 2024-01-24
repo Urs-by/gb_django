@@ -1,0 +1,13 @@
+{% extends 'gb_hw/base.html' %}
+{% block title %}Товары{% endblock %}
+{% block content %}
+<div class="container">
+    <h4>Список клиентов</h4>
+    {% for customer in customers %}
+    <li><a href="{% url 'customer_detail' customer=customer.pk %}"> ID: <b>{{ customer.pk }}</b> Имя:   <b>{{ customer.customer_name }}</b></a>,
+        Почта: <b>{{ customer.email }}</b>, Телефон: <b>{{ customer.phone }}</b>
+    </li>
+    {% endfor %}
+
+</div>
+{% endblock %}

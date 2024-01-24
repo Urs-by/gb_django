@@ -1,0 +1,24 @@
+{% extends 'gb_hw/base.html' %}
+{% block title %}Товары клиента{% endblock %}
+{% block content %}
+    <div class="container">
+        <h3>Заказы клиента:  {{ customer.customer_name }}</h3>
+        {% for order in orders %}
+        <li> ID:<b> {{ order.pk }}, </b>Дата заказа:<b>{{order.date_ordered }},
+        </b>Сумма заказа:<b> {{ order.total }}</b>
+        </li>
+            {% for product in order.product.all %}
+                <li> Товар: {{ product.product_name }} - Цена: {{ product.price }}</li>
+            {% endfor %}
+        {% endfor %}
+        <h3>Список уникальных товаров</h3>
+        <ul>
+            {% for product in products %}
+                <li> Товар: {{ product.product_name }} - Цена: {{ product.price }}</li>
+            {% endfor %}
+        </ul>
+
+
+
+    </div>
+{% endblock %}

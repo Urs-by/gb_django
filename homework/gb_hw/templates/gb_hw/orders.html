@@ -1,0 +1,14 @@
+{% extends 'gb_hw/base.html' %}
+{% block title %}Товары{% endblock %}
+{% block content %}
+<div class="container">
+    <h4>Список заказов</h4>
+    {% for order in orders %}
+
+    <li> <a href="{% url 'order_detail' order=order.pk %}">ID:<b> {{ order.pk }}, </b>Дата заказа:<b>{{order.date_ordered }},
+    </b>Сумма заказа:<b> {{ order.total }}</b></a>
+    </li>
+    {% endfor %}
+
+</div>
+{% endblock %}
