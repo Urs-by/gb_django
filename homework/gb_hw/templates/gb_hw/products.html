@@ -3,10 +3,40 @@
 {% block content %}
 <div class="container">
     <h4>Список товаров</h4>
+    <br>
+
+    <p>{{ message }}</p>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+<!--        {{ form.as_p }}-->
+        <div>
+            <label>ID:</label>
+            {{ form.id }}
+            <label>Название:</label>
+            {{ form.product_name }}
+            <label>Описание:</label>
+            {{ form.description }}
+        </div>
+        <br>
+        <div>
+            <label>Цена:</label>
+            {{ form.price }}
+            <label>Количество:</label>
+            {{ form.count }}
+        </div>
+        <br>
+        <div>
+            <label>Фото:</label>
+<!--            <form method="post" enctype="multipart/form-data">-->
+            {{ form.image }}
+            <input type="submit" value="Отправить">
+        </div>
+    </form>
+    <hr>
     {% for product in products %}
-    <li><pre>ID: {{ product.pk }} Название:{{ product.product_name }}
-        Цена: {{ product.price }} Количество: {{ product.count }}</pre>
-    </li>
+        <li>ID: {{ product.pk }}, Название: {{ product.product_name }},
+            Цена: {{ product.price }}, Количество: {{ product.count }}
+        </li>
     {% endfor %}
 
 </div>

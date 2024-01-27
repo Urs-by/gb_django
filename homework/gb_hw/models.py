@@ -18,6 +18,8 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=8, decimal_places=2)
     count = models.IntegerField()
     date_added = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='products/', default="products/")
+
 
     def __str__(self):
         return f'{self.product_name}, цена: {self.price}, количество: {self.count}'

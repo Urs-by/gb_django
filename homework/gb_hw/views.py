@@ -4,6 +4,8 @@ from django.shortcuts import render, get_object_or_404
 import logging
 from .models import Customer, Product, Order
 from datetime import datetime, timedelta
+from .forms import UpdateProductForm
+from django.core.files.storage import FileSystemStorage
 
 logger = logging.getLogger(__name__)
 
@@ -40,9 +42,48 @@ class CustomerList(View):
 
 class ProductList(View):
     def get(self, request):
+        form = UpdateProductForm()
+        message = "Для изменения данных заполните форму"
         products = Product.objects.all()
-        context = {'products': products}
+        context = {'products': products, 'form': form, 'message': message}
         return render(request, 'gb_hw/products.html', context)
+
+    def post(self, request):
+        form = UpdateProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            product_id = form.cleaned_data['id']
+            product = Product.objects.filter(id=product_id).first()
+            if product:
+                product.product_name = form.cleaned_data['product_name']
+                product.description = form.cleaned_data['description']
+                product.price = form.cleaned_data['price']
+                product.count = form.cleaned_data['count']
+
+                product.image = form.cleaned_data['image']
+                fs = FileSystemStorage()
+                fs.save(product.image.name, product.image)
+                product.save()
+            #form.save()
+                message = "Данные успешно обновлены"
+                products = Product.objects.all()
+                context = { 'products': products, 'form': form, 'message': message}
+                return render(request, 'gb_hw/products.html', context)
+            else:
+                products_all = Product.objects.all()
+                message = f"Товара с указанным ID={product_id} нет в базе данных"
+                context = {'products': products_all, 'form': form, 'message': message}
+                return render(request, 'gb_hw/products.html', context)
+
+
+        # else:
+        #     # Действия при валидации формы не удалась
+        #     products = Product.objects.all()
+        #     message = "Возникла ошибка. Пожалуйста, заполните форму корректно."
+        #     context = {'products': products, 'form': form, 'message': message}
+        #     return render(request, 'gb_hw/products.html', context)
+
+
+
 
 
 class OrderList(View):
